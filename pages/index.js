@@ -163,7 +163,7 @@ function App() {
       ) : correctNetwork ? (
         <div className={styles.main}>
           <h2> Task Management App</h2>
-          <form>
+          <form className={styles.card}>
             <TextField id="outlined-basic" label="Make Todo" variant="outlined" style={{margin:"0px 5px"}} size="small" value={input}
             onChange={e=>setInput(e.target.value)} />
             <Button variant="contained" color="primary" onClick={addTask}  >Add Task</Button>
