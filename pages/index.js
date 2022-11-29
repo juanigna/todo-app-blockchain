@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import {TextField , Button } from '@mui/material';
+import {TextField , Button, List } from '@mui/material';
 import { TaskContractAddress } from '../config';
 import {ethers} from 'ethers';
 import TaskAbi from "../utils/TaskContract.json"
@@ -151,8 +151,8 @@ function App() {
 
   //Function that delete a task
   
-  const deleteTask = key => async() => {
-    console.log(key);
+  async function deleteTask (id) {
+    console.log(id);
 
     // Now we got the key, let's delete our tweet
     try {
@@ -167,7 +167,7 @@ function App() {
           signer
         )
 
-        let deleteTaskTx = await TaskContract.deleteTask(key, true);
+        let deleteTaskTx = await TaskContract.deleteTask(id, true);
         let allTasks = await TaskContract.getMyTasks();
         setTasks(allTasks);
       } else {
@@ -192,20 +192,23 @@ function App() {
       ) : correctNetwork ? (
         <div className={styles.main}>
           <h2> Task Management App</h2>
+          <h4 className={styles.address}>UserAddress: {currentAccount}</h4>
           <form className={styles.card}>
             <TextField id="outlined-basic" label="Make Todo" variant="outlined" style={{margin:"0px 5px"}} size="small" value={input}
             onChange={e=>setInput(e.target.value)} />
             <Button variant="contained" color="primary" onClick={addTask}  >Add Task</Button>
           </form>
-          <ul>
+          <List>
+              
               {tasks.map(item=> 
                 <Task 
-                  key={item.id} 
                   taskText={item.taskText} 
-                  deleteTask={deleteTask(item.id)}
+                  deleteTask={deleteTask}
+                  id={item.id}
+                  key={item.id}
                 />)
               }
-          </ul>
+          </List>
         </div>
       ) : (
       <div className='flex flex-col justify-center items-center mb-20 font-bold text-2xl gap-y-3'>

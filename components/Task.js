@@ -4,17 +4,14 @@ import stylesTask from "./Task.module.css";
 
 //Component that render every task
 
-const Task = ({taskText, deleteTask}) => {
+const Task = ({taskText, deleteTask,id}) => {
   return (
-    <div id={taskText}>
-          <List className={stylesTask.todo__list}> 
-            <ListItem>
-                <ListItemAvatar />
-                    <ListItemText primary={taskText} />
+         <div key={id} className={stylesTask.todo__list}>
+            <ListItem >
+                <ListItemText primary={taskText}/>
+                <button onClick={() => deleteTask(id)}> X </button>
             </ListItem>
-            <button onClick={deleteTask}> X </button>
-        </List> 
-    </div>
+        </div>
   )
 }
 

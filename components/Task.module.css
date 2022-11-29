@@ -5,4 +5,6 @@
     width: 800px;
     border: 1px solid lightgray;
     margin-bottom: 10px !important;
+    border-radius: 20px;
+    background-color: rgb(20, 44, 87);
 }

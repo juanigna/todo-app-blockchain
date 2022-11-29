@@ -134,3 +134,12 @@
     filter: invert(1);
   }
 }
+
+.address{
+  transition: all .2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.address:hover{
+  transform: scale(1.09);
+  transition: all .2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
