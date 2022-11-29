@@ -1,1 +1,1 @@
-export const TaskContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"; //Address of the contract deployedd 
+export const TaskContractAddress = "0xE387B1862dFaF944a9A76478352F18E191f54a2E"; //Address of the contract deployedd 

@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react';
 import {TextField , Button } from '@mui/material';
-
 import { TaskContractAddress } from '../config';
 import {ethers} from 'ethers';
 import TaskAbi from "../utils/TaskContract.json"
@@ -20,7 +19,7 @@ function App() {
 
   const getAllTasks = async() => {
   try {
-    const {ethereum} = window
+    const {ethereum} = window;
 
     if(ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum);
@@ -44,11 +43,39 @@ function App() {
 //UseEffect that render the task of an address, and reload the page if the accounts is changed
   useEffect(() => {
       getAllTasks()
-      window.ethereum.on('accountsChanged', function (accounts) {
-        window.location.reload();
-      })
+      window.ethereum.on("accountsChanged", handleChanges)
     },[currentAccount]);
     
+
+    async function handleChanges(accounts){
+      try {
+        const { ethereum } = window
+  
+        if (!ethereum) {
+          console.log('Metamask not detected')
+          return
+        }
+        let chainId = await ethereum.request({ method: 'eth_chainId'})
+        console.log('Connected to chain:' + chainId)
+  
+        const ganache = '0x1691'
+  
+        if (chainId !== ganache) {
+          alert('You are not connected to the ganache LocalHost!')
+          return
+        } else {
+          setCorrectNetwork(true);
+        }
+  
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+  
+        console.log('Found account', accounts[0])
+        setCurrentAccount(accounts[0])
+      } catch (error) {
+        console.log('Error connecting to metamask', error)
+      }
+    }
+
     // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
     try {
@@ -61,7 +88,7 @@ function App() {
       let chainId = await ethereum.request({ method: 'eth_chainId'})
       console.log('Connected to chain:' + chainId)
 
-      const hardhat = '0x7a69'
+      const hardhat = '0x1691'
 
       if (chainId !== hardhat) {
         alert('You are not connected to the Hardhat LocalHost!')
@@ -79,6 +106,8 @@ function App() {
     }
   }  
   
+  
+
   //Function that add a new task
 
   const addTask= async (e)=>{
